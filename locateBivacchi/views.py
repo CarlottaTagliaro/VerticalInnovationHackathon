@@ -14,7 +14,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(request, "locateBivacchi/index.html")
 
 def temperature(request):
     response = ''
