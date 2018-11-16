@@ -61,7 +61,7 @@ def checkCode(request,biv_pk):
     if request.method == 'GET':
         response = 0
         code = int(request.GET.get('code'))
-        nr_res = Reservation.objects.filter(Bivacco=biv_pk, start_date__lte=datetime.today, end_date__gte=datetime.today, code=code).count()
+        nr_res = Reservation.objects.filter(bivacco=biv_pk, start_date__lte=datetime.today(), end_date__gte=datetime.today(), code=code).count()
         if (nr_res > 0):
             response = 1
     return HttpResponse(response)
