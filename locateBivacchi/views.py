@@ -44,3 +44,5 @@ def userSignup(request):
         form = UserCreationForm()
     return render(request, 'locateBivacchi/signup.html', {'form': form})
 
+def map(request):
+    return render(request, 'locateBivacchi/maps.html')
