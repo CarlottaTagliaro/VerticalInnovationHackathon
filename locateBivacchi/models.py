@@ -13,9 +13,9 @@ class Bivacco(models.Model):
     height = models.IntegerField()
 
 class Reservation(models.Model):
-    id_bivacco = models.ForeignKey(Bivacco, on_delete=models.CASCADE)
+    bivacco = models.ForeignKey(Bivacco, on_delete=models.CASCADE)   
     start_date = models.DateField()
     end_date = models.DateField()
     code = models.IntegerField(default=1234)
     person_number = models.IntegerField(default=0)
-    id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
