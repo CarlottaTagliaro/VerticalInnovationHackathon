@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime
 import time
+from locateBivacchi.models import Bar, Bivacco, Reservation
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -15,22 +17,30 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
 from .models import Bivacco, Reservation
 
+
 def index(request):
     return render(request, "locateBivacchi/index.html")
 
-def temperature(request):
+def temperature(request, biv_pk):
     response = ''
     if(request.method == 'GET'):
-        temp = request.GET.get('temp')
+        temp = int(request.GET.get('temp'))
         response = temp
+        if (temp > -10 and temp < 50):
+            obj = get_object_or_404(Bivacco, pk=biv_pk)
+            obj.temp = temp
+            obj.save()
     return HttpResponse(response)
 
-def bar(request):
+def bar(request, bar_pk):
     response = 0
     date_now = datetime.now()
     date_server = int(time.mktime(date_now.timetuple()))
-    if (request.method == 'GET'):
-        return HttpResponse(date_server)
+    bar = get_object_or_404(Bar, pk=bar_pk)
+    date_open = date_server - int(bar.request_time)
+    if (date_open < 20):
+        response = 1
+    return HttpResponse(response)
 
 def userSignup(request):
     if request.method == 'POST':
@@ -45,6 +55,17 @@ def userSignup(request):
     else:
         form = UserCreationForm()
     return render(request, 'locateBivacchi/signup.html', {'form': form})
+
+
+def checkCode(request,biv_pk):
+    if request.method == 'GET':
+        response = 0
+        code = int(request.GET.get('code'))
+        nr_res = Reservation.objects.filter(Bivacco=biv_pk, start_date__lte=datetime.today, end_date__gte=datetime.today, code=code).count()
+        if (nr_res > 0):
+            response = 1
+    return HttpResponse(response)
+        
 
 def map(request):
     biv_list = Bivacco.objects.all()
@@ -70,3 +91,4 @@ def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
     else:
         response = JsonResponse({'available': 'false'})
     return response
+
