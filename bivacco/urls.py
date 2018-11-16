@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^bivacchi/', include('locateBivacchi.urls')),
     url(r'^admin/', admin.site.urls),
+    
 ]
 

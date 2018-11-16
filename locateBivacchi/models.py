@@ -19,3 +19,8 @@ class Reservation(models.Model):
     code = models.IntegerField(default=1234)
     person_number = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class bar(models.Model):
+    request_time = models.IntegerField()
+    location = models.TextField(max_length=100)
+    description = models.TextField(max_length=100)
