@@ -68,7 +68,8 @@ def checkCode(request,biv_pk):
         
 
 def map(request):
-    return render(request, 'locateBivacchi/maps.html')
+    biv_list = Bivacco.objects.all()
+    return render(request, 'locateBivacchi/maps.html', {'biv_list': biv_list})
 
 def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
                              month_start, year_start, day_end, month_end,
