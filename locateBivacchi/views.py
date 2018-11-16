@@ -12,6 +12,8 @@ from django.contrib.auth import login
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import get_object_or_404
+from .models import Bivacco, Reservation
 
 def index(request):
     return render(request, "locateBivacchi/index.html")
@@ -46,3 +48,24 @@ def userSignup(request):
 
 def map(request):
     return render(request, 'locateBivacchi/maps.html')
+
+def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
+                             month_start, year_start, day_end, month_end,
+                             year_end):
+    bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
+
+    start_date = datetime(year=year_start, month=month_start, day=day_start)
+    end_date = datetime(year=year_end, month=month_end, day=day_end)
+
+    prenotazioni = Reservation.objects.filter(
+        bivacco=bivacco, start_date__lt=end_date, end_date__gt=start_date)
+
+    people = 0
+    for p in prenotazioni:
+        people += p.person_number
+
+    if people + person_number <= bivacco.capability:
+        response = response = JsonResponse({'available': 'true'})
+    else:
+        response = JsonResponse({'available': 'false'})
+    return response
