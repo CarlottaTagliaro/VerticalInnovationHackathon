@@ -9,12 +9,13 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import login
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from .models import Bivacco, Reservation
 
 
@@ -51,7 +52,7 @@ def userSignup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home') # TODO: cambiare questo
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = UserCreationForm()
     return render(request, 'locateBivacchi/signup.html', {'form': form})
@@ -65,7 +66,7 @@ def checkCode(request,biv_pk):
         if (nr_res > 0):
             response = 1
     return HttpResponse(response)
-        
+
 
 def map(request):
     biv_list = Bivacco.objects.all()
@@ -87,8 +88,7 @@ def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
         people += p.person_number
 
     if people + person_number <= bivacco.capability:
-        response = response = JsonResponse({'available': 'true'})
+        response = JsonResponse({'available': 'true'})
     else:
         response = JsonResponse({'available': 'false'})
     return response
-
