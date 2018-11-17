@@ -54,34 +54,44 @@
 		</nav>
 	</nav>
 	<main class="main">
-		<div class="container">
-			<div class="login-form">
-				<div>
-                                  <p>name:{{ bivacco.name }}</p>
-                                  <p>description:{{ bivacco.description }}</p>
-                                  <p>temperature: {{ bivacco.temp }}</p>
-                                  <p>latitude: {{ bivacco.coordinate_x }} </p>
-                                  <p>longitude {{ bivacco.coordinate_y }} </p>
-                                  <p>capability {{ bivacco.capability }} </p>
-                              </div>
-                              {% if user.is_authenticated %}
-                              <form id="reserve" method="POST">
-                                 <p>from</p>
-                                  <input type="date" min="2018-11-17" id="input_date_start"><br>
-                                 <p>to</p>
-                                  <input type="date" min="2018-11-17" id="input_date_end"><br>
-                                  <input type="number" id="person_count" min="1" max="{{ bivacco.capability }}"></input>
-                                  <button type="submit" class="btn btn-primary"><b>reserve</b></button>
-                              </form>
-                              {% else %}
+		<div class="container mb-5 mt-5">
+			<div class="pricing card-deck flex-column flex-md-row mb-3">
+				<div class="card card-pricing text-center px-3 mb-4">
+					<span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-success text-white shadow-sm">{{ bivacco.name }}</span>
+					<div class="bg-transparent card-header pt-4 border-0">
+					</div>
+					<div class="card-body pt-0">
+						<ul class="list-unstyled mb-4">
+							<li>Description: <p> {{ bivacco.description }}</p>
+							</li>
+							<li>Temperature: <p> {{ bivacco.temp }}</p>
+							</li>
+							<li>Latitude <p>{{ bivacco.coordinate_x }}</p>
+							</li>
+							<li>Longitude <p>{{ bivacco.coordinate_y }}</p>
+							</li>
+							<li>Capability <p>{{ bivacco.capability }}</p>
+							</li>
+						</ul>
+						{% if user.is_authenticated %}
+						<form id="reserve" method="POST">
+							<p>from</p>
+							<input type="date" min="2018-11-17" id="input_date_start"><br>
+							<p>to</p>
+							<input type="date" min="2018-11-17" id="input_date_end"><br>
+							<input type="number" id="person_count" min="1" max="{{ bivacco.capability }}"></input>
+							<button type="submit" class="btn btn-primary"><b>reserve</b></button>
+						</form>
+						{% else %}
 
-                              {% endif %}
+						{% endif %}
+					</div>
+				</div>
 			</div>
                   <div>
                     <p>temperature {{ weather.t }}
                     <a><img src= "{{ weather.imageUrl }}"></img></a>
                   </div>
-		</div>
 		</div>
 	</main>
 	<!-- Optional JavaScript -->
