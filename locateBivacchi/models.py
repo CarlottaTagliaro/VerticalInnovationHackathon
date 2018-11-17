@@ -26,7 +26,7 @@ class Bivacco(models.Model):
     height = models.IntegerField()
     temp = models.IntegerField()
     name = models.TextField(max_length=100)
-    description = models.TextField(max_length=1000)
+    description = models.TextField(max_length=1000, null=True, blank=True)
 
 class Reservation(models.Model):
     bivacco = models.ForeignKey(Bivacco, on_delete=models.CASCADE)   
