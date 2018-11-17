@@ -27,12 +27,17 @@
 
 <body class="body">
     <nav class="navbar navbar-dark bg-primary d-flex justify-content-between shadow menu bg-success">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <a class="navbar-brand" href="#">Smart Bivacco</a>
+        <div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand title" href=""><b>Smart Bivouac</b>
+              <img class="logo" src="{% static 'logo.png' %}"></a>
+          </div>
+        {% if user.is_authenticated %}
+        <label class="salutation ml-auto"><b>Hi, {{ user.get_username }}!</b></label>
+        {% endif %}
         <div>
         </div>
 

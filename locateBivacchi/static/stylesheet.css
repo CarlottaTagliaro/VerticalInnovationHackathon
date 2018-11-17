@@ -6,6 +6,7 @@
 
 .title {
     pointer-events: none;
+    margin-left: 10px;
 }
 
 .logo {
@@ -109,3 +110,13 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   width: 1366px;
   height: 574px;
 }*/
+
+.salutation {
+  color: white;
+  margin-top: 12px;
+  margin-right: 10px;
+}
+
+.logo {
+  margin-left: 10px;
+}

@@ -23,38 +23,38 @@
 </head>
 
 <body class="body" background="{% static 'back.jpg' %}">
-	<nav class="navbar navbar-dark bg-primary d-flex justify-content-between shadow bg-success menu">
-		<nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+	<nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+		<div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 			 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+			  <span class="navbar-toggler-icon"></span>
 			</button>
-			<a class="navbar-brand title" href="">Smart Bivacco
-				<img class="logo" src="{% static 'logo.png' %}"></a>
-			{% if user.is_authenticated %}
-			<p>Hi, {{ user.get_username }}!</p>
-			{% endif %}
-			<div>
-			</div>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
-						<a class="nav-link active" href="/" active>Home <span class="sr-only">(current)</span></a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/bivacchi/map">Maps</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/bivacchi/reservation">Manage Reservation</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/bivacchi/logout">Logout</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
+			<a class="navbar-brand title" href=""><b>Smart Bivouac</b>
+			  <img class="logo" src="{% static 'logo.png' %}"></a>
+		  </div>
+		{% if user.is_authenticated %}
+		<label class="salutation ml-auto"><b>Hi, {{ user.get_username }}!</b></label>
+		{% endif %}
+		<div>
+		</div>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link active" href="/" active>Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bivacchi/map">Maps</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bivacchi/reservation">Manage Reservation</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bivacchi/logout">Logout</a>
+				</li>
+			</ul>
+		</div>
 	</nav>
-    {% if not user.is_authenticated %}
+	{% if not user.is_authenticated %}
 	<main class="main">
 		<div class="container">
 			<div class="login-form">
@@ -64,13 +64,15 @@
 						<p>Please enter your email and password</p>
 					</div>
 					<form id="Login" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="/" />
+						{% csrf_token %}
+						<input type="hidden" name="next" value="/" />
 						<div class="form-group">
-                            <input class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" placeholder="Username" type="text" />
+							<input class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}"
+							 placeholder="Username" type="text" />
 						</div>
 						<div class="form-group">
-							<input class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" placeholder="Password" type="password" />
+							<input class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}"
+							 placeholder="Password" type="password" />
 						</div>
 						<div class="forgot">
 							<a href="/bivacchi/signup.html">First time here? Please Register</a>
@@ -83,7 +85,7 @@
 		</div>
 		</div>
 	</main>
-    {% endif %}
+	{% endif %}
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -20,38 +20,41 @@
 </head>
 
 <body class="body" background="{% static 'back.jpg' %}">
-	<nav class="navbar navbar-dark bg-primary d-flex justify-content-between shadow bg-success menu">
-		<nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+	<nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+		<div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 			 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
+			  <span class="navbar-toggler-icon"></span>
 			</button>
-			<a class="navbar-brand title" href="">Smart Bivacco
-				<img class="logo" src="{% static '140780.png' %}"></a>
-			<div>
-			</div>
+			<a class="navbar-brand title" href=""><b>Smart Bivouac</b>
+			  <img class="logo" src="{% static 'logo.png' %}"></a>
+		  </div>
+		{% if user.is_authenticated %}
+		<label class="salutation ml-auto"><b>Hi, {{ user.get_username }}!</b></label>
+		{% endif %}
+		<div>
+		</div>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active">
-						<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-					</li>
-					{% if user.is_authenticated %}
-					<li class="nav-item">
-						<a class="nav-link active" href="/bivacchi/map" >Maps</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/bivacchi/reservation">Manage Reservation</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/bivacchi/logout">Logout</a>
-					</li>
-					{% else %}
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+				</li>
+				{% if user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link active" href="/bivacchi/map">Maps</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bivacchi/reservation">Manage Reservation</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/bivacchi/logout">Logout</a>
+				</li>
+				{% else %}
 
-					{% endif %}
-				</ul>
-			</div>
-		</nav>
+				{% endif %}
+			</ul>
+		</div>
 	</nav>
 	<main class="main">
 		<div class="container mb-5 mt-5">
@@ -88,10 +91,10 @@
 					</div>
 				</div>
 			</div>
-                  <div>
-                    <p>temperature {{ weather.t }}
-                    <a><img src= "{{ weather.imageUrl }}"></img></a>
-                  </div>
+			<div>
+				<p>temperature {{ weather.t }}
+					<a><img src="{{ weather.imageUrl }}"></img></a>
+			</div>
 		</div>
 	</main>
 	<!-- Optional JavaScript -->

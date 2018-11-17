@@ -44,31 +44,33 @@
 
 <body class="body" background="{% static 'back.jpg' %}">
 
-    <script>
-        function goBack() {
+  <script>
+    function goBack() {
             window.history.back();
         }
     </script>
-
-  <nav class="navbar navbar-dark bg-primary d-flex justify-content-between shadow bg-success menu">
-    <nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+  <nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+    <div>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand title" href="">Smart Bivacco
-        <img class="logo" src="{% static '140780.png' %}"></a>
-      <div>
-      </div>
+      <a class="navbar-brand title" href=""><b>Smart Bivouac</b>
+        <img class="logo" src="{% static 'logo.png' %}"></a>
+    </div>
+  {% if user.is_authenticated %}
+  <label class="salutation ml-auto"><b>Hi, {{ user.get_username }}!</b></label>
+  {% endif %}
+    <div>
+    </div>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
   </nav>
   <main class="main">
     <div class="container">
@@ -79,7 +81,7 @@
             <p>Please enter your credentials</p>
           </div>
 
-            <form id="Register" method="POST" action="signup">
+          <form id="Register" method="POST" action="signup">
             {% csrf_token %}
             {% for field in form %}
             <div class="form-group">
@@ -93,7 +95,7 @@
 
             <button type="submit" class="btn btn-primary"><b>Register</b></button>
             <button onclick="goBack()" class="btn btn-primary reset"><b>Cancel</b></button>
-            </form>
+          </form>
         </div>
       </div>
     </div>

@@ -23,36 +23,36 @@
 </head>
 
 <body class="body" background="{% static 'back.jpg' %}">
-    <nav class="navbar navbar-dark bg-primary d-flex justify-content-between shadow bg-success menu">
-        <nav class="navbar navbar-dark bg-primary fixed-top d-flex justify-content-between shadow bg-success">
+    <nav class="navbar navbar-dark bg-primary fixed-top d-flex flex-row shadow bg-success">
+        <div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand title" href="">Smart Bivacco
-                <img class="logo" src="{% static 'logo.png' %}"></a>
-            {% if user.is_authenticated %}
-            <p>Hi, {{ user.get_username }}!</p>
-            {% endif %}
-            <div>
-            </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/bivacchi/map">Maps</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link active" href="/bivacchi/reservation">Manage Reservation</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/bivacchi/logout">Logout</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+            <a class="navbar-brand title" href=""><b>Smart Bivouac</b>
+              <img class="logo" src="{% static 'logo.png' %}"></a>
+          </div>
+        {% if user.is_authenticated %}
+        <label class="salutation ml-auto"><b>Hi, {{ user.get_username }}!</b></label>
+        {% endif %}
+        <div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bivacchi/map">Maps</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link active" href="/bivacchi/reservation">Manage Reservation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/bivacchi/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
     </nav>
     <main class="main">
         {% for res in reservations %}
@@ -93,14 +93,17 @@
         function open(pk) {
             alert("lol");
             $.ajax({
-                        type: "POST",
-                        url: "/bivacchi/opengate/" + pk + "/",
-                        async: true,
-                        success: function () {
-                            alert("lul");
-                        }
-                    });
+                type: "POST",
+                url: "/bivacchi/opengate/" + pk + "/",
+                async: true,
+                data: {
+                    'csrfmiddlewaretoken': "{{ csrf_token }}"
+                },
+                success: function () {
+                    alert("lul");
                 }
+            });
+        }
     </script>
 </body>
 
