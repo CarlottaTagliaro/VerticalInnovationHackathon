@@ -32,15 +32,18 @@ def index(request):
     return render(request, "locateBivacchi/index.html")
 
 def temperature(request, biv_pk):
-    response = ''
-    if(request.method == 'GET'):
-        temp = int(request.GET.get('temp'))
-        response = temp
-        if (temp > -10 and temp < 50):
-            obj = get_object_or_404(Bivacco, pk=biv_pk)
-            obj.temp = temp
-            obj.save()
-    return HttpResponse(response)
+    try:
+        response = ''
+        if(request.method == 'GET'):
+            temp = int(request.GET.get('temp'))
+            response = temp
+            if (temp > -10 and temp < 50):
+                obj = get_object_or_404(Bivacco, pk=biv_pk)
+                obj.temp = temp
+                obj.save()
+        return HttpResponse(response)
+    catch:
+        return HttpResponse()
 
 def bar(request, bar_pk):
     response = 0
@@ -61,7 +64,7 @@ def userSignup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect('/')
         else:
             print("NOOOOOOOOOOOOOOO")
     else:

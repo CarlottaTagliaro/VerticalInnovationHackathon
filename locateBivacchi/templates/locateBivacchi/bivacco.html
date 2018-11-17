@@ -24,11 +24,11 @@
 		<div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 			 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			  <span class="navbar-toggler-icon"></span>
+				<span class="navbar-toggler-icon"></span>
 			</button>
 			<a class="navbar-brand title" href=""><b>Smart Bivouac</b>
-			  <img class="logo" src="{% static 'logo.png' %}"></a>
-		  </div>
+				<img class="logo" src="{% static 'logo.png' %}"></a>
+		</div>
 		{% if user.is_authenticated %}
 		<label class="salutation ml-auto"><b>Hi, {{ user.get_username }}!</b></label>
 		{% endif %}
@@ -60,21 +60,25 @@
 		<div class="container mb-5 mt-5">
 			<div class="pricing card-deck flex-column flex-md-row mb-3">
 				<div class="card card-pricing text-center px-3 mb-4">
-					<span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-success text-white shadow-sm">{{ bivacco.name }}</span>
+					<span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-success text-white shadow-sm"><b>{{ bivacco.name }}</b></span>
 					<div class="bg-transparent card-header pt-4 border-0">
 					</div>
 					<div class="card-body pt-0">
 						<ul class="list-unstyled mb-4">
-							<li>Description: <p> {{ bivacco.description }}</p>
+							<li><b>Description:</b> {{ bivacco.description }}
 							</li>
-							<li>Temperature: <p> {{ bivacco.temp }}</p>
+							<li><b>Indoor Temperature:</b> {{ bivacco.temp }}
 							</li>
-							<li>Latitude <p>{{ bivacco.coordinate_x }}</p>
+							<li>
+								<b>Outdoor Temperature:</b>{{ weather.t }}
 							</li>
-							<li>Longitude <p>{{ bivacco.coordinate_y }}</p>
+							<li><b>Latitude:</b> {{ bivacco.coordinate_x }}
 							</li>
-							<li>Capability <p>{{ bivacco.capability }}</p>
+							<li><b>Longitude:</b> {{ bivacco.coordinate_y }}
 							</li>
+							<li><b>Capability: </b> {{ bivacco.capability }}
+							</li>
+
 						</ul>
 						{% if user.is_authenticated %}
 						<div id="error_alerts"></div>
@@ -89,15 +93,13 @@
 						</form>
 						{% else %}
 
-						{% endif %}
+							{% endif %}
 					</div>
 				</div>
 			</div>
 			<div>
-				<p>temperature {{ weather.t }}
-					<a><img src="{{ weather.imageUrl }}"></img></a>
+				<a><img src="{{ weather.imageUrl }}"></img></a>
 			</div>
-		</div>
 	</main>
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
