@@ -77,11 +77,30 @@ def _checkAvail(bivacco, start_date, end_date, person_number):
     prenotazioni = Reservation.objects.filter(
         bivacco=bivacco, start_date__lt=end_date, end_date__gt=start_date)
 
-    people = 0
+    # wrote this at 2 am, after 3 days of fever, so please dont judge it
+    from datetime import timedelta, date
+    def daterange(start_date, end_date):
+        for n in range(int ((end_date - start_date).days)):
+            yield start_date + timedelta(n)
+
+    people = dict()
+
     for p in prenotazioni:
-        people += p.person_number
-    
-    if people + person_number <= bivacco.capability:
+        for d in daterange(p.start_date, p.end_date):
+            if d < start_date.date():
+                continue
+            if d > end_date.date():
+                break
+
+            if d not in people:
+                people[d] = 0
+            people[d] += p.person_number
+
+    max_people = 0
+    if len(people) > 0:
+        max_people = max(people.values())
+
+    if max_people + person_number <= bivacco.capability:
         return True
     else:
         return False
