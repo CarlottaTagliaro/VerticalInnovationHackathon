@@ -130,7 +130,7 @@ def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
     return response
 
 
-@login_required(login_url=reverse("login"))
+@login_required(login_url="/")
 def reserveBivacco(request, id_bivacco, person_number, day_start,
                    month_start, year_start, day_end, month_end,
                    year_end):
@@ -161,8 +161,11 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
         'code': -1
     })
 
+@login_required(login_url="/")
 def reservations(request):
-    return render(request,'locateBivacchi/manageReservation.html')
+    u = request.user
+    res_list = Reservation.objects.filter(user=u)
+    return render(request,'locateBivacchi/manageReservation.html',{'reservations':res_list})
     
 def viewBivacco(request, id_bivacco):
     if request.method == 'GET':
@@ -170,3 +173,14 @@ def viewBivacco(request, id_bivacco):
         info = utils.get_nearest_station(bivacco.coordinate_x, bivacco.coordinate_y)
         return render(request, "locateBivacchi/bivacco.html", 
             {'bivacco': bivacco, 'user': request.user, 'weather': info})
+
+def open_gate(request,id_gate):
+    if (request.method == 'POST'):
+        bar = get_object_or_404(Bar,pk=id_gate)
+        date_now = datetime.now()
+        date_server = int(time.mktime(date_now.timetuple()))
+        bar.request_time = date_server
+        bar.save()
+        return HttpResponse(status = 200)
+    else:
+        return HttpResponse(status = 400)
