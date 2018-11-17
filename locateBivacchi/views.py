@@ -17,20 +17,15 @@ from random import randint
 from django.shortcuts import render, redirect
 from datetime import datetime
 import time
-from locateBivacchi.models import Bar, Bivacco, Reservation
-from django.shortcuts import get_object_or_404
-
-# Create your views here.
-
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import login
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import UserCreationForm
+from .forms import SignUpForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy as reverse
-from .models import Bivacco, Reservation
+from .models import Bivacco, Reservation, Bar
 
 
 def index(request):
@@ -59,7 +54,7 @@ def bar(request, bar_pk):
 
 def userSignup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -67,8 +62,10 @@ def userSignup(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
+        else:
+            print("NOOOOOOOOOOOOOOO")
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'locateBivacchi/signup.html', {'form': form})
 
 
