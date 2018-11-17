@@ -78,28 +78,22 @@
             <h2><b>Register</b></h2>
             <p>Please enter your credentials</p>
           </div>
-          <form id="Register" method="POST">
-            <div class="form-group">
-              <input type="text" class="form-control" id="inputName" placeholder="Name">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="inputSurname" placeholder="Surname">
-            </div>
-            <div class="form-group">
-              <input type="email" class="form-control" id="inputEmail" placeholder="Email Address">
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-            </div>
 
+            <form id="Register" method="POST" action="signup">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+              {{ field }}
+            </div>
+            {% endfor %}
             <div class="form-check">
               <input type="checkbox" required class="form-check-input" id="exampleCheck1">
               <label class="form-check-label" for="exampleCheck1">I accept the privacy normatives</label>
             </div>
+
             <button type="submit" class="btn btn-primary"><b>Register</b></button>
             <button onclick="goBack()" class="btn btn-primary reset"><b>Cancel</b></button>
-
-          </form>
+            </form>
         </div>
       </div>
     </div>
