@@ -25,7 +25,7 @@ function init() {
 
 function add_bivacco(bivacco) {
   var marker = L.marker([bivacco.coordinate_x, bivacco.coordinate_y]).addTo(mymap);
-  marker.bindPopup("<a href=\"viewbivacco/" + bivacco.id + "/"+'"' + "/>view in details</a>")
+  marker.bindPopup("<p>"+bivacco.name+"</p><a href=\"viewbivacco/" + bivacco.id + "/"+'"' + "/>view in details</a>")
 }
 
 init();
