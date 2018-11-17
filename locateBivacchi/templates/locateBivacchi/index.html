@@ -42,18 +42,19 @@
 						<a class="nav-link active" href="/" active>Home <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="bivacchi/map">Maps</a>
+						<a class="nav-link" href="/bivacchi/map">Maps</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="bivacchi/reservation">Manage Reservation</a>
+						<a class="nav-link" href="/bivacchi/reservation">Manage Reservation</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Logout</a>
+						<a class="nav-link" href="/bivacchi/logout">Logout</a>
 					</li>
 				</ul>
 			</div>
 		</nav>
 	</nav>
+    {% if not user.is_authenticated %}
 	<main class="main">
 		<div class="container">
 			<div class="login-form">
@@ -66,10 +67,10 @@
                         {% csrf_token %}
                         <input type="hidden" name="next" value="/" />
 						<div class="form-group">
-                            <input class="form-control" id="{{ form.username.id_for_label }}" maxlength="30" name="{{ form.username.html_name }}" placeholder="Username" type="text" />
+                            <input class="form-control" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" placeholder="Username" type="text" />
 						</div>
 						<div class="form-group">
-							<input class="form-control" id="{{ form.password.id_for_label }}" maxlength="30" name="{{ form.password.html_name }}" placeholder="Password" type="text" />
+							<input class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" placeholder="Password" type="password" />
 						</div>
 						<div class="forgot">
 							<a href="/bivacchi/signup.html">First time here? Please Register</a>
@@ -82,6 +83,7 @@
 		</div>
 		</div>
 	</main>
+    {% endif %}
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
