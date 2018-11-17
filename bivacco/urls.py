@@ -31,10 +31,12 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from locateBivacchi import views
 from django.urls import path
+from django.contrib.auth.views import logout, login
+from django.contrib.auth.views import LoginView
 
 
 urlpatterns = [
-    path('', views.index ),
+    path('', LoginView.as_view(template_name='locateBivacchi/index.html')),
     url(r'^bivacchi/', include('locateBivacchi.urls')),
     url(r'^admin/', admin.site.urls),
     
