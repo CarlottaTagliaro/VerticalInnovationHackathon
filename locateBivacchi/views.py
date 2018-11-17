@@ -161,6 +161,9 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
         'code': -1
     })
 
+def reservations(request):
+    return render(request,'locateBivacchi/manageReservation.html')
+    
 def viewBivacco(request, id_bivacco):
     if request.method == 'GET':
         bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
