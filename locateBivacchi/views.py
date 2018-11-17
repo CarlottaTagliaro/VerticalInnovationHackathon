@@ -80,7 +80,7 @@ def checkCode(request,biv_pk):
 
 
 def map(request):
-    biv_list = Bivacco.objects.all()
+    biv_list = list(Bivacco.objects.all())
     return render(request, 'locateBivacchi/maps.html', {'biv_list': biv_list})
 
 def _checkAvail(bivacco, start_date, end_date, person_number):
@@ -160,3 +160,8 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
         'available': 'false',
         'code': -1
     })
+
+def viewBivacco(request, id_bivacco):
+    if request.method == 'GET':
+        bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
+        return render(request, "locateBivacchi/bivacco.html", {'bivacco': bivacco})
