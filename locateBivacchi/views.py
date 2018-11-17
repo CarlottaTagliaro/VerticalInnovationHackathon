@@ -17,20 +17,15 @@ from random import randint
 from django.shortcuts import render, redirect
 from datetime import datetime
 import time
-from locateBivacchi.models import Bar, Bivacco, Reservation
-from django.shortcuts import get_object_or_404
-
-# Create your views here.
-
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import login
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.forms import UserCreationForm
+from .forms import SignUpForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy as reverse
-from .models import Bivacco, Reservation
+from .models import Bivacco, Reservation, Bar
 
 
 def index(request):
@@ -59,7 +54,7 @@ def bar(request, bar_pk):
 
 def userSignup(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -67,8 +62,10 @@ def userSignup(request):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
+        else:
+            print("NOOOOOOOOOOOOOOO")
     else:
-        form = UserCreationForm()
+        form = SignUpForm()
     return render(request, 'locateBivacchi/signup.html', {'form': form})
 
 
@@ -83,7 +80,7 @@ def checkCode(request,biv_pk):
 
 
 def map(request):
-    biv_list = Bivacco.objects.all()
+    biv_list = list(Bivacco.objects.all())
     return render(request, 'locateBivacchi/maps.html', {'biv_list': biv_list})
 
 def _checkAvail(bivacco, start_date, end_date, person_number):
@@ -166,3 +163,9 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
 
 def reservations(request):
     return render(request,'locateBivacchi/manageReservation.html')
+    
+def viewBivacco(request, id_bivacco):
+    if request.method == 'GET':
+        bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
+        #info = get_nearest_station(bivacco.coordinate_x, bivacco.coordinate_y)
+        return render(request, "locateBivacchi/bivacco.html", {'bivacco': bivacco, 'user': request.user})

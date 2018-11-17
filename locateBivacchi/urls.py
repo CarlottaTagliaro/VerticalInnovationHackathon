@@ -27,4 +27,5 @@ urlpatterns = [
     path('checkavailable/<int:id_bivacco>/<int:person_number>/<int:day_start>/<int:month_start>/<int:year_start>/<int:day_end>/<int:month_end>/<int:year_end>/', views.checkBivaccoAvailability, name="check_availability"),
     path('reserve/<int:id_bivacco>/<int:person_number>/<int:day_start>/<int:month_start>/<int:year_start>/<int:day_end>/<int:month_end>/<int:year_end>/', views.reserveBivacco, name="reserve"),
     path('reservation', views.reservations),
+    path('viewbivacco/<int:id_bivacco>/', views.viewBivacco, name="viewBivacco"),
 ]
