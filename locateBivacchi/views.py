@@ -131,13 +131,18 @@ def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
 
 
 @login_required(login_url="/")
-def reserveBivacco(request, id_bivacco, person_number, day_start,
-                   month_start, year_start, day_end, month_end,
-                   year_end):
+def reserveBivacco(request, id_bivacco):
     bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
+    try:
+        person_number = int(request.POST.__getitem__("person_count"))
+        _start_date = request.POST.__getitem__("date_start")
+        _end_date = request.POST.__getitem__("date_end")
+    except (KeyError, ValueError) as e:
+        print(e)
+        return HttpResponse(status = 400)
 
-    start_date = datetime(year=year_start, month=month_start, day=day_start)
-    end_date = datetime(year=year_end, month=month_end, day=day_end)
+    start_date = datetime.strptime(_start_date, "%Y-%m-%d")
+    end_date = datetime.strptime(_end_date, "%Y-%m-%d")
 
     if _checkAvail(bivacco=bivacco, start_date=start_date, end_date=end_date, person_number=person_number):
         reservation = Reservation()
@@ -150,8 +155,7 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
 
         reservation.save()
 
-        return JsonResponse(
-        {
+        return JsonResponse({
             'available': 'true',
             'code': reservation.code
         })
@@ -166,12 +170,12 @@ def reservations(request):
     u = request.user
     res_list = Reservation.objects.filter(user=u)
     return render(request,'locateBivacchi/manageReservation.html',{'reservations':res_list})
-    
+
 def viewBivacco(request, id_bivacco):
     if request.method == 'GET':
         bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
         info = utils.get_nearest_station(bivacco.coordinate_x, bivacco.coordinate_y)
-        return render(request, "locateBivacchi/bivacco.html", 
+        return render(request, "locateBivacchi/bivacco.html",
             {'bivacco': bivacco, 'user': request.user, 'weather': info})
 
 def open_gate(request,id_gate):
