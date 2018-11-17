@@ -26,7 +26,7 @@ from .forms import SignUpForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy as reverse
 from .models import Bivacco, Reservation, Bar
-
+from . import utils
 
 def index(request):
     return render(request, "locateBivacchi/index.html")
@@ -164,5 +164,6 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
 def viewBivacco(request, id_bivacco):
     if request.method == 'GET':
         bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
-        #info = get_nearest_station(bivacco.coordinate_x, bivacco.coordinate_y)
-        return render(request, "locateBivacchi/bivacco.html", {'bivacco': bivacco, 'user': request.user})
+        info = utils.get_nearest_station(bivacco.coordinate_x, bivacco.coordinate_y)
+        return render(request, "locateBivacchi/bivacco.html", 
+            {'bivacco': bivacco, 'user': request.user, 'weather': info})
