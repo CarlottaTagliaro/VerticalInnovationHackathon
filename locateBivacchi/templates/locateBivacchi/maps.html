@@ -70,7 +70,7 @@
 
   function add_bivacco(bivacco) {
     var marker = L.marker([bivacco.coordinate_x, bivacco.coordinate_y]).addTo(mymap);
-    marker.bindPopup("I am a popup")
+    marker.bindPopup("<a href=\"viewbivacco/" + bivacco.id + "/"+'"' + "/>view in details</a>")
   }
 
   init();
@@ -79,7 +79,8 @@
 {% for bivacco in biv_list %}
 <script>
   var elem = {coordinate_x: "{{ bivacco.coordinate_x }}", 
-              coordinate_y: "{{ bivacco.coordinaye_y }}"}
+              coordinate_y: "{{ bivacco.coordinaye_y }}",
+              id: "{{ bivacco.id }}"}
               
   add_bivacco(elem);
 </script>

@@ -150,3 +150,6 @@ def reserveBivacco(request, id_bivacco, person_number, day_start,
         'available': 'false',
         'code': -1
     })
+
+def viewBivacco(request, id_bivacco):
+    render(request, "bivacco.html", {'bivacco_id': bivacco})
