@@ -93,12 +93,13 @@
 							<form id="reserve" name="reserve" method="POST">
 								{% csrf_token %}
 								<li><b>From:</b>
-									<input type="date" min="2018-11-17" id="date_start" name="date_start"><br>
+									<input class="form-control" type="date" min="2018-11-17" id="date_start" name="date_start">
 								</li>
 								<li>
 									<b>To:</b>
-									<input type="date" min="2018-11-17" id="date_end" name="date_end"><br></li>
-								<li><input type="number" name="person_count" id="person_count" min="1" max="{{ bivacco.capability }}"></input></li>
+									<input class="form-control" type="date" min="2018-11-17" id="date_end" name="date_end"></li>
+								<li>
+									<b>Person:</b><input class="form-control" value="1" type="number" name="person_count" id="person_count" min="1" max="{{ bivacco.capability }}"></input></li>
 
 								<li><button type="submit" class="btn btn-primary bg-success reserva"><b>Reserve</b></button></li>
 							</form>
