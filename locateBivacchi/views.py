@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from random import randint
 from django.shortcuts import render, redirect
 from datetime import datetime
 import time
@@ -12,10 +12,11 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib.auth import login
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse_lazy as reverse
 from .models import Bivacco, Reservation
 
 
@@ -72,6 +73,19 @@ def map(request):
     biv_list = Bivacco.objects.all()
     return render(request, 'locateBivacchi/maps.html', {'biv_list': biv_list})
 
+def _checkAvail(bivacco, start_date, end_date, person_number):
+    prenotazioni = Reservation.objects.filter(
+        bivacco=bivacco, start_date__lt=end_date, end_date__gt=start_date)
+
+    people = 0
+    for p in prenotazioni:
+        people += p.person_number
+    
+    if people + person_number <= bivacco.capability:
+        return True
+    else:
+        return False
+
 def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
                              month_start, year_start, day_end, month_end,
                              year_end):
@@ -80,15 +94,40 @@ def checkBivaccoAvailability(request, id_bivacco, person_number, day_start,
     start_date = datetime(year=year_start, month=month_start, day=day_start)
     end_date = datetime(year=year_end, month=month_end, day=day_end)
 
-    prenotazioni = Reservation.objects.filter(
-        bivacco=bivacco, start_date__lt=end_date, end_date__gt=start_date)
-
-    people = 0
-    for p in prenotazioni:
-        people += p.person_number
-
-    if people + person_number <= bivacco.capability:
+    if _checkAvail(bivacco, start_date, end_date, person_number):
         response = JsonResponse({'available': 'true'})
     else:
         response = JsonResponse({'available': 'false'})
     return response
+
+
+@login_required(login_url=reverse("login"))
+def reserveBivacco(request, id_bivacco, person_number, day_start,
+                   month_start, year_start, day_end, month_end,
+                   year_end):
+    bivacco = get_object_or_404(Bivacco, pk=id_bivacco)
+
+    start_date = datetime(year=year_start, month=month_start, day=day_start)
+    end_date = datetime(year=year_end, month=month_end, day=day_end)
+
+    if _checkAvail(bivacco=bivacco, start_date=start_date, end_date=end_date, person_number=person_number):
+        reservation = Reservation()
+        reservation.user = request.user
+        reservation.bivacco = bivacco
+        reservation.start_date = start_date
+        reservation.end_date = end_date
+        reservation.person_number = person_number
+        reservation.code = randint(1000, 9999)
+
+        reservation.save()
+
+        return JsonResponse(
+        {
+            'available': 'true',
+            'code': reservation.code
+        })
+
+    return JsonResponse({
+        'available': 'false',
+        'code': -1
+    })
