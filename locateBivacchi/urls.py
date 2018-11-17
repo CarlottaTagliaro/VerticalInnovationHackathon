@@ -19,6 +19,7 @@ from . import views
 urlpatterns = [
     path('temperature/<int:biv_pk>/', views.temperature, name='temperature'),
     path('bar/<int:bar_pk>/', views.bar),
+    path('opengate/<int:id_gate>/', views.open_gate),
     path('checkcode/<int:biv_pk>/', views.checkCode),
     url(r'^map$', views.map, name='map'),
     url(r'^signup', views.userSignup, name='signup'),

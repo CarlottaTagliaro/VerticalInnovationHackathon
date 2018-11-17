@@ -26,8 +26,8 @@ username = "texel" # your username here
 password = "dBNLyn3BL3vbcE2B" # your password here
 dev_EUI = "0099f60988d034e8" # your device EUI here
 TIME_SLEEP = 5
-server_ip = "52.168.150.89"
-server_port = "6000"
+server_ip = "127.0.0.1"
+server_port = "8000"
 
 # JWT generation method needed to query the LoRa App Server API
 def regenerateJWT(password,username):

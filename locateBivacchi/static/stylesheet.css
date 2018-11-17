@@ -96,11 +96,11 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   color: #6c757d;
 }
 
-.card-deck {
+.card-deck1 {
   margin: 0;
 }
 
-.card-pricing {
+.card-pricing1 {
   border-color: green;
   max-width: 350px;
 }

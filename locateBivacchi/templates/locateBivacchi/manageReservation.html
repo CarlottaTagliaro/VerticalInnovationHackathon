@@ -55,28 +55,31 @@
         </nav>
     </nav>
     <main class="main">
+        {% for res in reservations %}
         <div class="container mb-5 mt-5">
             <div class="pricing card-deck card-deck1 flex-column flex-md-row mb-3">
                 <div class="card card-pricing card-pricing1 text-center px-3 mb-4">
-                    <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-success text-white shadow-sm">Bivacco 1</span>
+                    <span class="h6 w-60 mx-auto px-4 py-1 rounded-bottom bg-success text-white shadow-sm">{{res.bivacco.name}}</span>
                     <div class="bg-transparent card-header pt-4 border-0">
                     </div>
                     <div class="card-body pt-0">
                         <ul class="list-unstyled mb-4">
-                            <li>Start Time: <p> 17-11-2018</p>
+                            <li>Start Time: <p> {{res.start_date}}</p>
                             </li>
-                            <li>End Time: <p> 19-11-2018 </p>
+                            <li>End Time: <p>{{res.end_date}} </p>
                             </li>
-                            <li>Places Reserved: <p>2</p>
+                            <li>Places Reserved: <p>{{res.person_number}}</p>
                             </li>
-                            <li>Door Code: <p>12341</p>
+                            <li>Door Code: <p>{{res.code}}</p>
                             </li>
                         </ul>
-                        <button type="button" class="btn btn-outline-secondary mb-3">Open Gate</button>
+                        <button type="button" href="#" onclick="open({{ res.bivacco.pk }})" class="btn btn-outline-secondary mb-3">Open
+                            Gate</button>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </main>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -86,6 +89,19 @@
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
+    <script>
+        function open(pk) {
+            alert("lol");
+            $.ajax({
+                        type: "POST",
+                        url: "/bivacchi/opengate/" + pk + "/",
+                        async: true,
+                        success: function () {
+                            alert("lul");
+                        }
+                    });
+                }
+    </script>
 </body>
 
 </html>
