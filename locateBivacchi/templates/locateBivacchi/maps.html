@@ -62,23 +62,25 @@
        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       id: 'mapbox.streets'
      }).addTo(mymap);
+     mymap.on("popupopen", function(e) { kkk = e;})
   }
 
   function add_bivacco(bivacco) {
-    var marker = L.marker([bivacco.x, bivacco.y]).addTo(mymap);
+    var marker = L.marker([bivacco.coordinate_x, bivacco.coordinate_y]).addTo(mymap);
     marker.bindPopup("I am a popup")
   }
 
-  function add_bivs() {
-    var biv_list = "{{biv_list}}";
-    for (var biv in biv_list) {
-      add_bivacco(biv);
-    }
-  }
-
   init();
-  add_bivs();
 </script>
+
+{% for bivacco in biv_list %}
+<script>
+  var elem = {coordinate_x: "{{ bivacco.coordinate_x }}", 
+              coordinate_y: "{{ bivacco.coordinaye_y }}"}
+              
+  add_bivacco(elem);
+</script>
+{% endfor %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
