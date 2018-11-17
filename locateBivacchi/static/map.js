@@ -14,8 +14,9 @@ function init() {
    function resize() {
      document.getElementById("mapid").style.height = (h-56)+"px";
      document.getElementById("mapid").style.height = w+"px";
+     window.mymap.invalidateSize()
    }
-   resize();
+   setTimeout(resize(),300);
    window.onresize = function() {
      resize();
    };

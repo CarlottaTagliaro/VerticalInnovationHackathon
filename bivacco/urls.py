@@ -31,7 +31,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from locateBivacchi import views
 from django.urls import path
-from django.contrib.auth.views import logout, login
 from django.contrib.auth.views import LoginView
 
 
