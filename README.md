@@ -3,7 +3,7 @@
 
 The mountains of South Tyrol are rich in activities and nature.
 
-To take full advantage on a trip in the mountains a tourist can use a bivouac, an high altitude refugee, free of charge.
+To take full advantage on a trip in the mountains a tourist can use a bivouac, an high altitude shelter, free of charge.
 
 In the last few years tourism has increased considerably and bivouacs are becoming more and more crowded.
 
