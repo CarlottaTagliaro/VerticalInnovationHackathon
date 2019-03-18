@@ -12,4 +12,7 @@ With this smart platform, based on the LoRa technology, you will be able to book
 In case of special needs you can also request a car pass to access restricted roads directly on the service, reducing bureaucracy and increasing accessibility.
 
 ### Team
-Francesco Ballerin, Alberto Bombardelli, Andrea Dalla Costa, Carlotta Tagliaro
+- [Francesco Ballerin](https://github.com/ballerin)
+- [Alberto Bombardelli](https://github.com/caramellaio)
+- [Andrea Dalla Costa](https://github.com/draane)
+- [Carlotta Tagliaro](https://github.com/CarlottaTagliaro)
